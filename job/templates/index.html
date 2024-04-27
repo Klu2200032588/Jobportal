@@ -34,54 +34,43 @@
     }
 </style>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
 
-        <div class="carousel-item active">
-            <img src="{% static 'images/hback.jpeg' %}" class="d-block w-100" alt="First slide">
-        </div>
-
-    </div>
-
+  <div class="logo-container">
+    <img src="{{ logo_index }}" alt="Logo">
 </div>
+
+
 
 <div class="container" style="background-color:white;height:570px;color: LightSlateGray; margin-top:2%">
     <h1 class="text-center text-yellow">Our Top Companies</h1>
     <div class="row">
         <div class="col-md-3">
-            <img src="{% static 'images/walmart.png' %}" style="width:100%; margin-top:5%;height: 200px; border-radius:50%">
+            <img src="{{ walmart_image_url }}" style="width:100%; margin-top:5%;height: 200px; border-radius:50%">
             <div class="content ">
                 <p>Walmart</p>
             </div>
         </div>
 
- <div class ="col-md-3">
-        <img src="{%static 'images/tata.jpeg'%}" style ="width=100%; margin-top:5%;height : 200px; border-radius:50%" >
-        <div class ="content " >
-            <p> TATA</p>
-    </div>
- </div>
+        <div class="col-md-3">
+            <img src="{{ tata_image_url }}" style="width:100%; margin-top:5%;height : 200px; border-radius:50%">
+            <div class="content">
+                <p>TATA</p>
+            </div>
+        </div>
 
+        <div class="col-md-3">
+            <img src="{{ slack_image_url }}" style="width:100%; margin-top:5%;height : 200px; border-radius:50%">
+            <div class="content">
+                <p>Slack</p>
+            </div>
+        </div>
 
-      <div class ="col-md-3">
-        <img src="{%static 'images/slack.png'%}" style ="width=100%; margin-top:5%;height : 200px; border-radius:50%" >
-        <div class ="content " >
-            <p> slacks</p>
-    </div>
-      </div>
-
-
-           <div class ="col-md-3">
-        <img src="{%static 'images/navidia.jpeg'%}" style ="width=100%; margin-top:5%;height : 200px; border-radius:50%" >
-        <div class ="content " >
-            <p> Navidia</p>
-    </div>
-           </div>
+        <div class="col-md-3">
+            <img src="{{ nvidia_image_url }}" style="width:100%; margin-top:5%;height : 200px; border-radius:50%">
+            <div class="content">
+                <p>Nvidia</p>
+            </div>
+        </div>
     </div>
 </div>
 

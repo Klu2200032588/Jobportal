@@ -1,0 +1,58 @@
+{% load static %}
+{% block body%}
+{% include 'recruiter_navigation.html'%}
+<style>
+    tr{text-align : center}
+    tr.highlight-row:hover {
+    background-color: lightgrey !important;
+}
+
+</style>
+
+<marquee style =" font-family: 'Monotype Corsiva ';font-size : 25px ; color : darkcyan ; font-weight : steelblue;  background-color : ">
+    Applied Candidate List
+</marquee>
+<hr>
+<div class ="container ">
+<table class="table table-hover ">
+<thead>
+<tr style=" background-color: #000080 ; color:white">
+    <th> S.No</th>
+    <th> FullName</th>
+    <th> EmailID</th>
+    <th> Contact NO.</th>
+    <th> Job Title</th>
+    <th> Company</th>
+    <th>ApplyDate</th>
+    <th> Resume</th>
+</tr>
+</thead>
+<tbody>
+{%for i in data %}
+{% if request.user.id == i.job.recruiter.user.id %}
+
+<tr class="highlight-row" style="background-color: white">
+    <td>{{forloop.counter}}</td>
+    <td>{{i.student.user.first_name}} {{i.student.user.last_name}}</td>
+    <td>{{i.student.user.username}}</td>
+    <td>{{i.student.mobile}}</td>
+    <td>{{i.job.title}}</td>
+    <td>{{i.job.recruiter.company}}</td>
+    <td>{{i.applydate}}</td>
+    <td><a href="{{i.resume.url}}">Download Resume</a></td>
+    <td><a href="{% url 'view_profile' i.student.id %}" class="btn btn-success btn-sm">View Profile</a></td>
+
+
+
+</tr>
+{% endif %}
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+{% endblock %}

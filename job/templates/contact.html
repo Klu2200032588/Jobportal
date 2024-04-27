@@ -1,0 +1,78 @@
+{% load static %}
+{% block body %}
+{% include 'navigation.html' %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    body {
+        background-color: white; /* Set default background color */
+    }
+
+    .content-container {
+        background-image: url("{% static 'images/Cback.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        min-height: calc(100vh - 60px); /* Adjust based on the height of your navigation */
+        padding-top: 60px; /* Adjust based on the height of your navigation */
+    }
+
+    .mydiv:hover {
+        box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+        transform: translateY(-20px);
+    }
+
+    .container {
+        padding-top: 50px; /* Adjust as needed */
+    }
+
+    .row {
+        margin-top: 30px;
+    }
+
+    .mydiv {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .mydiv h4 {
+        font-family: 'Monotype Corsiva';
+        font-size: 20px;
+        color: black;
+    }
+
+    .mydiv p {
+        font-size: 18px;
+        color: black;
+    }
+</style>
+
+<div class="content-container">
+    <div class="container mt-5">
+        <div class="row mt-5">
+            <div class="col-sm-3 mydiv">
+                <h4 class="text-center"><i class="fas fa-phone"></i> Contact</h4>
+                <p class="text-center">+91 7600098123</p>
+            </div>
+
+            <div class="col-sm-3 mydiv">
+                <h4 class="text-center"><i class="fas fa-envelope"></i> Email ID</h4>
+                <p class="text-center">Jobgenieportal100@gmail.com</p>
+            </div>
+
+            <div class="col-sm-3 mydiv">
+                <h4 class="text-center"><i class="fas fa-map-marker-alt"></i> Address</h4>
+                <p class="text-center">Abc road Vijayawada</p>
+            </div>
+
+            <div class="col-sm-3 mydiv">
+                <h4 class="text-center"><i class="far fa-clock"></i> Office Timing</h4>
+                <p class="text-center">10:00 A.M to 7.00 P.M</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

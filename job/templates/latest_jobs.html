@@ -1,0 +1,74 @@
+{% load static %}
+{% block body %}
+{% include 'navigation.html' %}
+<style>
+    /* Add custom CSS styles */
+    .background-container {
+        background-image: url("{% static 'images/back.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding-top: 20px; /* Adjust as needed */
+        height: 65vh
+    }
+    th, td {
+        text-align: center;
+    }
+    th {
+        background-color: #000080;
+        color: white;
+    }
+    .table tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+    .table-hover tbody tr:hover {
+        background-color: lightgrey;
+    }
+    .action-btn {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+    .action-btn:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+</style>
+
+<div class="background-container">
+    <marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: ; font-weight: steelblue; background-color:">
+        Latest Job List
+    </marquee>
+    <hr>
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Company Name</th>
+                    <th>Job Title</th>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in job %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.recruiter.company}}</td>
+                    <td>{{i.title}}</td>
+                    <td>{{i.location}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>
+                        <a href="{% url 'user_login' %}" class="btn btn-success btn-sm action-btn">Login to Apply</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% load static %}
+{% block body %}
+{% include 'user_navigation.html' %}
+<style>
+    /* Add custom CSS styles */
+    .job-details-container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .job-details-container h2 {
+        color: #007bff;
+    }
+    .job-details-container img {
+        max-width: 100%;
+        height: auto;
+    }
+    .job-details-container .job-info {
+        margin-top: 20px;
+    }
+</style>
+<marquee style =" font-family: 'Monotype Corsiva ';font-size : 25px ; color : darkcyan ; font-weight : steelblue;  background-color : #7dcfb6 ">
+    Apply For Job
+</marquee>
+
+<div class="container shadow-lg py-2 mb-2">
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="form-row">
+        <label class ="font-weight-bold">Upload Resume</label>
+        <input type="file" class="form-control" name="resume">
+
+    </div>
+<input type="submit" value="Submit" class="btn btn-danger mt-3">
+</form>
+</div>
+{% if error == "close" %}
+<script>
+    alert("Application line are closed,last date is over");
+    window.location.href = "{% url 'user_latestjobs' %}";
+</script>
+{% endif %}
+
+{% if error == "notopen" %}
+<script>
+    alert("Application line is not open ");
+    window.location.href = "{% url 'user_latestjobs' %}";
+</script>
+{% endif %}
+
+{% if error == "done" %}
+<script>
+    alert("Job Application submitted successfully ");
+    window.location.href = "{% url 'user_latestjobs' %}";
+</script>
+{% endif %}
+
+{% endblock %}

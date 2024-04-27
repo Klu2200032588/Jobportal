@@ -1,0 +1,86 @@
+{% load static %}
+{% block body %}
+{% include 'empty.html' %}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url("{% static 'images/Aback.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 80%;
+    }
+     .form-group label {
+        font-size: 30px; /* Increased font size for labels */
+    }
+    .btn-lg {
+        padding: 10px 10px; /* Increase padding */
+        font-size: 24px; /* Increase font size */
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .btn {
+        width: 100%;
+        font-size: 17px;
+        margin-top: 20px;
+    }
+
+    .card {
+        font-family: 'Monotype Corsiva';
+        color: black;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Admin Login</h2>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" class="form-control" id="uname" name="uname" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+                <label for="pwd"><b>Password</b></label>
+                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <p class="text-center mt-3"> <a href="{% url 'index' %}">Back To Home</a></p>
+        </form>
+        {% if error == "no" %}
+        <script>
+            alert("Login Successful");
+            window.location.href = "{% url 'admin_home' %}";
+        </script>
+        {% endif %}
+        {% if error == "yes" %}
+        <div class="alert alert-danger mt-3" role="alert">
+            Invalid login credentials, please try again.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

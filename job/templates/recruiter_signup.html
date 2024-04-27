@@ -1,0 +1,191 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter SignUp</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url("{% static 'images/rsback.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 80%;
+        }
+        .form-control {
+        font-size: 15px; /* Increased font size for input fields */
+        padding: 8px; /* Increase padding */
+    }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+        .form-group label {
+        font-size: 20px; /* Increased font size for labels */
+        .btn-lg {
+        padding: 10px 20px; /* Increase padding */
+
+    }
+    .btn-primary {
+        padding: 15px 30px; /* Increase padding */
+        font-size: 30px; /* Increase font size */
+        width: 100%; /* Make the button full width */
+    }
+
+
+    </style>
+    <script>
+    function checkpass() {
+        var pwd = document.signup.pwd.value;
+        var cpwd = document.signup.cpwd.value;
+        var email = document.signup.email.value;
+        var contact = document.signup.contact.value;
+        var fname = document.signup.fname.value;
+        var lname = document.signup.lname.value;
+
+        // Check if password and confirm password match
+        if (pwd !== cpwd) {
+            alert('Password and Confirm Password do not match');
+            document.signup.cpwd.focus();
+            return false;
+        }
+
+        // Check if email contains '@'
+        if (email.indexOf('@') === -1) {
+            alert('Email should contain "@"');
+            document.signup.email.focus();
+            return false;
+        }
+
+        // Check if contact number contains exactly 10 digits and consists only of numbers
+        if (isNaN(contact) || contact.length !== 10) {
+            alert('Contact number should contain exactly 10 digits');
+            document.signup.contact.focus();
+            return false;
+        }
+
+        // Check if first name and last name contain only letters
+        var nameRegex = /^[a-zA-Z]+$/;
+        if (!fname.match(nameRegex) || !lname.match(nameRegex)) {
+            alert('First name and last name should contain only letters');
+            document.signup.fname.focus();
+            return false;
+        }
+
+        // Check if password is strong (at least 8 characters long, including at least one uppercase letter, one lowercase letter, one number, and one special character)
+        var pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!pwd.match(pwdRegex)) {
+            alert('Password should be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character');
+            document.signup.pwd.focus();
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+</head>
+<body>
+    {% block body %}
+    {% include 'empty.html' %}
+    <marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: black; font-weight: bold; background-color: ">
+        Recruiter SignUp
+    </marquee>
+    <hr>
+    <div class="background">
+        <form class="container" method="post" enctype="multipart/form-data" name="signup" onsubmit="return checkpass();">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="fname" placeholder="Enter First Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Contact</label>
+                    <input type="text" class="form-control" name="contact" placeholder="Enter Contact No.">
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Company</label>
+                    <input type="text" class="form-control" name="company" placeholder="Enter your Company Name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Enter Email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Gender</label>
+                    <div style="border: 1px solid lightgray; padding: 5px; border-radius: 6px">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male">
+                            <label class="custom-control-label" for="customRadioInline1">Male</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female">
+                            <label class="custom-control-label" for="customRadioInline2">Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="pwd" placeholder="Enter Password">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" name="cpwd" placeholder="Enter Password Again">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Image</label>
+                    <input type="file" class="form-control" name="image">
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary my-3" style="width: 200px">
+        </form>
+    </div>
+
+    {% if error == "no" %}
+    <script>
+        alert("Signup Successful");
+        window.location.href = "{% url 'recruiter_login' %}";
+    </script>
+    {% endif %}
+
+    {% if error == "yes" %}
+    <script>
+        alert("Something went wrong, Try Again...");
+    </script>
+    {% endif %}
+
+    {% endblock %}
+</body>
+</html>

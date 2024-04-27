@@ -1,0 +1,59 @@
+{% load static %}
+{% block body %}
+{% include 'user_navigation.html' %}
+<style>
+    /* Add custom CSS styles */
+    .job-details-container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .job-details-container h2 {
+        color: #007bff;
+    }
+    .job-details-container img {
+        max-width: 100%;
+        height: auto;
+    }
+    .job-details-container .job-info {
+        margin-top: 20px;
+    }
+</style>
+<marquee style =" font-family: 'Monotype Corsiva ';font-size : 25px ; color : darkcyan ; font-weight : steelblue;  background-color : #7dcfb6 ">
+Job Details
+</marquee>
+
+<div class="container">
+    <div class="job-details-container shadow-lg py-4 px-5 mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ job.image.url }}" alt="{{ job.title }}">
+            </div>
+            <div class="col-md-8">
+                <h2>{{ job.title }}</h2>
+                <p>{{ job.recruiter.company }} <em><a href="{% url 'user_latestjobs' %}">(View all jobs)</a></em></p>
+                <div class="job-info">
+                    <p><i class="fa fa-map-marker mr-2"></i> Location: {{ job.location }}</p>
+                    <p><i class="fa fa-calendar mr-2"></i> Posted on: {{ job.creationdate }}</p>
+                    <p><i class="fa fa-money mr-2"></i> Salary: {{ job.salary }}</p>
+                    <a href="{% url 'applyforjob' job.id %}" class="btn btn-danger mt-3">Apply for this Job</a>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <h4>Overview</h4>
+            <p>{{ job.description }}</p>
+
+            <h4>Required Experience</h4>
+            <p>{{ job.experience }}</p>
+
+            <h4>Start Date for Applying</h4>
+            <p>{{ job.start_date }}</p>
+
+            <h4>End Date for Applying</h4>
+            <p>{{ job.end_date }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% load static %}
+{% block body %}
+{% include 'recruiter_navigation.html' %}
+<style>
+    /* Add custom CSS styles */
+    .background-container {
+        background-image: url("{% static 'images/uback.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh; /* Ensure full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        background-color: white; /* Set form background to white */
+        padding: 50px; /* Adjust padding */
+        max-width: 500px; /* Adjust max-width */
+        font = 30px
+    }
+
+
+    .captcha-container {
+        position: relative; /* Ensure proper positioning of refresh-icon */
+    }
+
+    .captcha-image {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .refresh-icon {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+
+<marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: darkcyan; font-weight: bold; background-color: ">
+    Edit Job Details
+</marquee>
+
+<form class="container mt-5" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Job Title</label>
+            <input type="text" class="form-control" name="jobtitle" value="{{job.title}}">
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Start Date</label> <span style="color:blue">[{{job.start_date}}]</span>
+            <input type="date" class="form-control" name="startdate" >
+        </div>
+        <div class="form-group col-md-6">
+            <label>End Date</label> <span style="color:blue">[{{job.end_date}}]</span>
+            <input type="date" class="form-control" name="enddate" >
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Salary(Per Month)</label>
+            <input type="text" class="form-control" name="salary" value="{{job.salary}}" required>
+        </div>
+
+        <div class="form-group col-md-6">
+            <img src = "{{job.image.url}}" width="120" height="90"><a href="{% url 'change_companylogo' job.id %}">Change Company Logo</a>
+
+
+   </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Experience(In Years)</label>
+            <input type="text" class="form-control" name="experience" value="{{job.experience}}" required>
+        </div>
+
+    </div>
+     <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Company Location</label>
+            <input type="text" class="form-control" name="location" value="{{job.location}}" required>
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Skills</label>
+            <input type="text" class="form-control" name="skills"  value="{{job.skills}}" required>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label>Description</label>
+            <textarea class="form-control" name="description"  required>{{job.description}}</textarea>
+        </div>
+    </div>
+
+
+
+    <input type="submit" value="Submit" class="btn btn-primary my-3" style="width: 200px">
+</form>
+
+
+
+{% if error == "no" %}
+<script>
+    alert("Job details has been added");
+    window.location.href = "{% url 'job_list' %}";
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert("Something went wrong,Try Again...");
+</script>
+{% endif %}
+
+{% endblock %}
+
+

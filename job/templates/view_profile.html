@@ -1,0 +1,81 @@
+{% load static %}
+
+{% block body %}
+{% include 'recruiter_navigation.html' %}
+   <marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: darkcyan; font-weight: bold; background-color: ">
+        Profile
+    </marquee>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <form class="container mt-5" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="fname" class="col-md-3 col-form-label">First Name</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="fname" value="{{student.user.first_name}}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname" class="col-md-3 col-form-label">Last Name</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="lname" value="{{student.user.last_name}}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="contact" class="col-md-3 col-form-label">Contact</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="contact" value="{{student.mobile}}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-md-3 col-form-label">Email ID</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="email" value="{{student.user.username}}" readonly>
+                        </div>
+                    </div>
+                   <div class="form-group row">
+    <label for="gender" class="col-md-3 col-form-label">Gender</label>
+    <div class="col-md-3">
+        <div style="border: 1px solid lightgray; padding: 5px; border-radius: 6px">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male" {% if student.gender == "Male" %}checked disabled{% endif %}>
+                <label class="custom-control-label" for="customRadioInline1">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female" {% if student.gender == "Female" %}checked disabled{% endif %}>
+                <label class="custom-control-label" for="customRadioInline2">Female</label>
+                <p class="text-center mt-4">validate Email <a href="{% url 'accept' %}">validate Email</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+                </form>
+            </div><!--col 1 end-->
+            <div class="col-sm-4 mt-5 text-center">
+                <img src="{{student.image.url}}" width="300px" height="300px">
+            </div>
+        </div>
+    </div>
+
+
+    {% if error == "no" %}
+        <script>
+            alert("Profile Updated Successfully");
+            window.location.href = "{% url 'applied_candidatelist' %}";
+        </script>
+    {% endif %}
+
+    {% if error == "yes" %}
+        <script>
+            alert("Something went wrong, Try again...");
+        </script>
+    {% endif %}
+{% endblock %}
+

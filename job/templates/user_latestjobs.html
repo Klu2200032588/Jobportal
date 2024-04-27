@@ -1,0 +1,76 @@
+{% load static %}
+{% block body%}
+{% include 'user_navigation.html'%}
+<style>
+    /* Set background image for the entire page */
+    body {
+        background-image: url("{% static 'images/back.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Adjust the container to center the table */
+    .container {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px; /* Adjusted margin from top to leave space for navigation bar */
+    }
+
+    /* Adjust table styles */
+    table {
+        margin-top: 20px; /* Adjusted margin from top */
+    }
+
+    tr { text-align: center; }
+
+    tr.highlight-row:hover { background-color: lightgrey !important; }
+
+</style>
+
+
+
+
+<marquee style =" font-family: 'Monotype Corsiva ';font-size : 25px ; color : darkcyan ; font-weight : white;  background-color : white ">
+User Job List
+</marquee>
+<hr>
+<div class ="container ">
+<table class="table table-hover ">
+<thead>
+<tr style=" background-color: #000080 ; color:white">
+    <th> S.No</th>
+    <th>Company Name</th>
+    <th> Job Title</th>
+    <th>Location</th>
+    <th> Start Date</th>
+     <th> End Date</th>
+    <th> Action</th>
+</tr>
+</thead>
+<tbody>
+{% for i in job %}
+<tr class="highlight-row" style="background-color: white">
+    <td>{{forloop.counter}}</td>
+    <td>{{i.recruiter.company}}</td>
+    <td>{{i.title}}</td>
+    <td>{{i.location}}</td>
+    <td>{{i.start_date}}</td>
+    <td>{{i.end_date}}</td>
+
+    {% if i.id in li %}
+    <td>Applied</td>
+    {% else %}
+    <td><a href="{% url 'job_detail' i.id %}" class = "btn  btn-success btn-sm" >Apply</a>
+    {% endif %}
+</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+{% endblock %}

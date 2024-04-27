@@ -1,0 +1,22 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+
+</head>
+<body>
+
+<div class="card">
+    <h2 style="text-align: center; margin-bottom: 30px;">Send Email</h2>
+    <form action="{% url 'send_email_with_button' %}" method="post">
+	<label for="Email_ID">Email ID: </label>
+	<input id="" type="ID" name="ID">
+	<input type="submit" value="Send" class="btn btn-primary">
+</form>
+
+</div>
+
+</body>
+</html>

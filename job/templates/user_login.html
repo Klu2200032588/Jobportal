@@ -1,0 +1,117 @@
+{% load static %}
+{% block body %}
+{% include 'empty.html' %}
+<script>
+    function refreshCaptcha(imageId, inputId) {
+        var captchaImage = document.getElementById(imageId);
+        var randomString = Math.random().toString(36).substring(7);
+        var captchaSrc = "https://dummyimage.com/120x40/000/fff&text=" + randomString;
+
+        captchaImage.src = captchaSrc;
+        document.getElementById(inputId).value = ""; // Clear the previous input
+    }
+
+    // Trigger the captcha refresh on page load
+    window.onload = function () {
+        refreshCaptcha('captchaImage', 'captchaInput');
+    };
+</script>
+
+
+<div class="background-container">
+    <div class="container mt-5">
+        <div class="card shadow p-4 form-container"> <!-- Removed margin-top -->
+            <h2 class="text-center mb-4" style="font-family: 'Monotype Corsiva'; color: black; font-weight: bold;">User Login</h2>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="uname"><b>Email ID</b></label>
+                    <input type="email" class="form-control form-control-lg" id="uname" name="uname" placeholder="Enter Email ID" style="font-size: 18px;" required>
+                </div>
+                <div class="form-group">
+                    <label for="pwd"><b>Password</b></label>
+                    <input type="password" class="form-control form-control-lg" id="pwd" name="pwd" placeholder="Enter Password" style="font-size: 18px;" required>
+                </div>
+                <div class="form-group captcha-container">
+                    <label for="captcha"><b>CAPTCHA</b></label><br>
+                    <!-- Updated id from loginCaptchaInput to captchaInput -->
+                    <img id="captchaImage" src="" alt="CAPTCHA" class="captcha-image">
+                    <span class="refresh-icon" onclick="refreshCaptcha('captchaImage', 'captchaInput')">
+                        <i class="fas fa-sync-alt" style="font-size: 50px;"></i>
+                    </span>
+                    <input type="text" id="captchaInput" name="captchaInput" placeholder="Enter CAPTCHA" class="form-control form-control-lg" style="font-size: 18px;" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Login</button>
+            </form>
+            <p class="text-center mt-3">Don't have an account? <a href="{% url 'user_signup' %}">Create an account</a></p>
+            <p class="text-center mt-3"> <a href="{% url 'index' %}">Back To Home</a></p>
+            {% if error == "no" %}
+            <script>
+                alert("Login Successful");
+                window.location.href = "{% url 'user_home' %}";
+            </script>
+            {% endif %}
+            {% if error == "yes" %}
+            <div class="alert alert-danger mt-3" role="alert">
+                Invalid login credentials, please try again.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Add custom CSS styles */
+    .background-container {
+        background-image: url("{% static 'images/uback.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh; /* Ensure full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        background-color: white; /* Set form background to white */
+        padding: 50px; /* Adjust padding */
+        max-width: 500px; /* Adjust max-width */
+        font-size: 20px; /* Increased font size */
+    }
+
+    .form-group label {
+        font-size: 25px; /* Increased font size for labels */
+    }
+
+    .form-control {
+        font-size: 18px; /* Increased font size for input fields */
+    }
+
+    .captcha-container {
+        position: relative; /* Ensure proper positioning of refresh-icon */
+    }
+
+    .captcha-image {
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .refresh-icon {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+
+    .btn-lg {
+        padding: 10px 10px; /* Increase padding */
+        font-size: 24px; /* Increase font size */
+    }
+</style>
+
+
+
+{% endblock %}

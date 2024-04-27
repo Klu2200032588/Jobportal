@@ -1,0 +1,160 @@
+{% load static %}
+{% block body %}
+{% include 'empty.html' %}
+<script>
+    function checkpass() {
+        // Check if password and confirm password match
+        if (document.signup.pwd.value != document.signup.cpwd.value) {
+            alert('Password and Confirm Password do not match');
+            document.signup.cpwd.focus();
+            return false;
+        }
+
+        // Check if email contains '@'
+        var email = document.signup.email.value;
+        if (email.indexOf('@') == -1) {
+            alert('Email should contain "@"');
+            document.signup.email.focus();
+            return false;
+        }
+
+        // Check if contact number contains exactly 10 digits
+        var contact = document.signup.contact.value;
+        if (contact.length != 10 || isNaN(contact)) {
+            alert('Contact number should contain exactly 10 digits');
+            document.signup.contact.focus();
+            return false;
+        }
+
+        // Check if first name and last name contain only letters
+        var fname = document.signup.fname.value;
+        var lname = document.signup.lname.value;
+        var nameRegex = /^[a-zA-Z]+$/;
+        if (!fname.match(nameRegex) || !lname.match(nameRegex)) {
+            alert('First name and last name should contain only letters');
+            document.signup.fname.focus();
+            return false;
+        }
+
+        // Check if password is strong (at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character)
+        var pwd = document.signup.pwd.value;
+        var pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!pwd.match(pwdRegex)) {
+            alert('Password should be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character');
+            document.signup.pwd.focus();
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<style>
+    .background-container {
+        background-image: url("{% static 'images/back.jpeg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .form-group label {
+        font-size: 30px; /* Increased font size for labels */
+    }
+    .btn-lg {
+        padding: 10px 10px; /* Increase padding */
+        font-size: 24px; /* Increase font size */
+    }
+
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+        padding: 40px; /* Adjusted padding */
+        max-width: 600px; /* Adjusted max-width */
+        border-radius: 10px;
+    }
+
+    .form-control {
+        padding: 10px; /* Adjusted padding for form controls */
+        font-size: 16px; /* Increased font size for form controls */
+    }
+    .text-center {
+        font-size: 30px; /* Adjust the font size as needed */
+    }
+</style>
+
+
+<div class="background-container">
+    <form class="container mt-5" onsubmit="return checkpass();" name="signup" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <marquee style="font-family: 'Monotype Corsiva'; font-size: 25px; color: black; font-weight: bold;">User SignUp</marquee>
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="fname" placeholder="Enter First Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Last Name</label>
+                <input type="text" class="form-control" name="lname" placeholder="Enter Last Name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Contact</label>
+                <input type="text" class="form-control" name="contact" placeholder="Enter Contact No.">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Email</label>
+                <input type="text" class="form-control" name="email" placeholder="Enter Email">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Gender</label>
+                <div style="border: 1px solid lightgray; padding: 5px; border-radius: 6px">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" value="Male">
+                        <label class="custom-control-label" for="customRadioInline1">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" value="Female">
+                        <label class="custom-control-label" for="customRadioInline2">Female</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Password</label>
+                <input type="password" class="form-control" name="pwd" placeholder="Enter Password">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" name="cpwd" placeholder="Enter Password Again">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Image</label>
+                <input type="file" class="form-control" name="image">
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary my-3" style="width: 250px; padding: 15px 20px; font-size: 18px;">
+
+        <p class="text-center mt-4">validate Email <a href="{% url 'email_template' %}">validate Email</a></p>
+    </form>
+
+    {% if error == "no" %}
+    <script>
+        alert("Signup Successful");
+        window.location.href = "{% url 'user_login' %}";
+    </script>
+    {% endif %}
+
+    {% if error == "yes" %}
+    <script>
+        alert("Something went wrong, Try again...");
+    </script>
+    {% endif %}
+</div>
+
+{% endblock %}

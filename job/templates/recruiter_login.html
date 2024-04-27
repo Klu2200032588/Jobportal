@@ -1,0 +1,72 @@
+{% load static %}
+{% block body %}
+{% include 'empty.html' %}
+
+<style>
+    .background {
+        background-image: url("{% static 'images/rback.webp' %}");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%; /* Adjust width as needed */
+        max-width: 500px; /* Set maximum width for responsiveness */
+        background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
+        border-radius: 20px;
+    }
+    .form-group label {
+        font-size: 30px; /* Increased font size for labels */
+    }
+    .btn-lg {
+        padding: 10px 10px; /* Increase padding */
+        font-size: 24px; /* Increase font size */
+    }
+    .form-control {
+        font-size: 12px; /* Increased font size for input fields */
+        padding: 9px; /* Increase padding */
+    }
+</style>
+
+<div class="background">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4" style="font-family: 'Monotype Corsiva'; color: black; font-weight: bold;">Recruiter Login</h2>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="uname"><b>Username:</b></label>
+                <input type="text" class="form-control" id="uname" name="uname" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+                <label for="pwd"><b>Password:</b></label>
+                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+            <p class="text-center mt-3">Don't have an account? <a href="{% url 'recruiter_signup' %}">Create an account</a></p>
+            <p class="text-center mt-3"> <a href="{% url 'index' %}">Back To Home</a></p>
+        </form>
+        {% if error == "no" %}
+        <script>
+            alert("Login Successful");
+            window.location.href = "{% url 'recruiter1_home' %}";
+        </script>
+        {% endif %}
+        {% if error == "yes" %}
+        <div class="alert alert-danger mt-3" role="alert">
+            Invalid login credentials, please try again.
+        </div>
+        {% endif %}
+        {% if error == "not" %}
+        <div class="alert alert-warning mt-3" role="alert">
+            Your login status is pending.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

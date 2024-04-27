@@ -12,7 +12,14 @@ from django.shortcuts import get_object_or_404
 from datetime import date
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    context = {
+        'walmart_image_url': 'https://media.designrush.com/inspiration_images/345908/conversions/walmart_1-preview.jpg',
+        'tata_image_url': 'https://i.pinimg.com/originals/5b/ac/94/5bac942d02e70ce67498bf2ff04efe97.png',
+        'slack_image_url': 'https://t3.ftcdn.net/jpg/03/98/76/08/360_F_398760837_vHn5HpwkSdupuTzZll5nKEHtjhEqVVCH.jpg',
+        'nvidia_image_url': 'https://www.nvidia.com/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/01-nvidia-logo-vert-500x200-2c50-p@2x.png',
+        'logo_index' : 'https://media.licdn.com/dms/image/C5612AQENZ2eM4ifDig/article-cover_image-shrink_600_2000/0/1520092031253?e=2147483647&v=beta&t=a9AXehnlV2KWREsKjreAuXNJ4IdtRBS12iJHPFzTHjg',
+    }
+    return render(request,'index.html',context)
 def gen_resume(request):
     if request.method == 'POST':
         name = request.POST.get('name', '')
